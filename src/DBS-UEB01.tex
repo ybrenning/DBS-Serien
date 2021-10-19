@@ -1,0 +1,164 @@
+%! Author = yanni
+%! Date = 18.10.2021
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{Datenbanksysteme I}
+\newcommand{\Name}{Yannick Brenning}
+\newcommand{\Seminargruppe}{C}
+\newcommand{\Matrikelnummer}{3732848}
+\newcommand{\Semester}{WiSe 21/22}
+\newcommand{\Uebungsblatt}{1} %  <-- UPDATE ME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin -1.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.0in}
+
+%%%%%%%%%%%%%%%
+%% Aufgaben-COMMAND
+\newcommand{\Aufgabe}[1]{
+        {
+        \vspace*{0.5cm}
+        \textbf{Aufgabe #1}
+        \vspace*{0.2cm}
+    }
+}
+%%%%%%%%%%%%%%
+\hypersetup{
+    pdftitle = {\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdfauthor = {\Name},
+    pdfborder = {0 0 0}
+}
+
+\lstset{ %
+    language=java,
+    basicstyle=\footnotesize\tt,
+    showtabs=false,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    extendedchars=true,
+    showstringspaces=false,
+    flexiblecolumns=true,
+}
+
+\title{Übungsblatt \Uebungsblatt{}}
+\author{\Name{}}
+
+\begin{document}
+    \thispagestyle{fancy}
+    \lhead{\Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+    \rhead{\Semester{} \\  Übungsgruppe \Seminargruppe{}}
+    \vspace*{0.2cm}
+    \begin{center}
+        \LARGE \textbf{Übungsblatt \Uebungsblatt{}}
+    \end{center}
+    \vspace*{0.2cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Insert your solutions here %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \Aufgabe{1}
+    \begin{itemize}
+
+        \item DB, DBVS/DBMS, DBS
+        \newline Ein \emph{DBS}, auch genannt Datenbanksystem ist ein System, welches zur dauerhaften Speicherung
+        und Verwaltung großer Datenmengen verwendet wird. Ein DBS besteht aus der \emph{DB} (Datenbank) und einem
+        \emph{DBVS} Datenbankverwaltungssystem. Die DB enthält hierbei die Menge der gespeicherten Daten, und das
+        DBVS ist ein vereinfachtes Software-System, mit dem man diese Daten verwalten und verarbeiten kann.
+        Datenbanksysteme werden in Kombination mit Anwendungen und Benutzerschnittstellen verwendet,
+        um Informationssysteme zu bilden.
+        % Ein naheliegendes Beispiel für ein IS mit einer DBS ist ein Uni-IS,
+        % welches in seinen DBS u.a. Daten zu Studenten, Vorlesungen, Dozenten, usw. speichert.
+        % Anwendungen könnten hierbei die Erstellung von Stundenplänen und Hörsaalbelegungen sein, sowie Prüfungspläne.
+        % Eine Benutzerschnittstelle wäre bspw. das AlmaWeb, wobei Benutzer sich für Studiengänge bewerben, sowie für
+        % Module und Veranstaltungen anmelden können.
+
+        \item Mehrnutzerbetrieb, Transaktion, log. Einbenutzerbetrieb, Synchronisation
+        \newline Eine \emph{Transaktion} ist eine Folge von DB-operationen, die eine Manipulation der DB erreichen.
+        Eine Transaktion erfüllt die sog. ACID-Eigenschaften, welche verscheidene Arten and Datenintegrität implizieren.
+        Dazu zählt die Ablaufintegrität, welche einen kontrollierten Mehrbenutzerbetrieb gewährleisten soll.
+        Bei einem \emph{Mehrbenutzerbetrieb} werden Transaktionen parallel von mehreren Nutzern ausgeführt.
+        Hierbei ist die Isolation, die dritte ACID-Eigenschaft zu gewährleisten durch den \emph{log. Einbenutzerbetrieb}.
+        Dieser setzt voraus, dass trotz mehrerer Benutzer die einzelnen Transaktionen logisch getrennt verarbeitet werden.
+        Diese Transaktionen führen zu Änderungen durch mehrere Benutzer, welche dann durch \emph{Synchronisation}
+        umgesetzt werden sollen, ohne dass die Nutzer sich dabei gegenseitig behindern.
+
+        \item OLTP, OLAP, Data Warehouse
+        \newline \emph{OLTP} steht für Online Transaction Processing und ist am Betrieb eines DBS beteiligt.
+        Hierbei handelt es sich um schnelle, meist einfache vorgeplante Abfragen, die auf bestimmte Datensätze zugreifen.
+        Die Bearbeitungszeit pro einzelne Transaktion ist kurz, und sie treten häufig auf. Hierbei soll die
+        Datenintegrität durch ACID eingehalten werden.
+        \emph{OLAP} (Online Analytical Processing) befasst sich im Gegensatz zu OLTP mit großen Datenbeständen,
+        z.B. Archivdaten. Das Transaktionsvolumen ist vergleichsweise gering und einzelne Abfragen sind komplex.
+        Diese können zur Vorbereitung von Geschäftsentscheidungen dienen und könenn mit sog. \emph{Data Warehouses }
+        interagieren. Ein Data Warehouse ist ein Datenpool mit internen und externen Daten, welche konsolidiert,
+        analysiert und zur Entscheidungsfindung aufbereitet werden.
+
+    \end{itemize}
+
+    \newpage
+
+    \Aufgabe{2}
+    \begin{itemize}
+        \item Die Ansicht der Artikelliste soll nach dem Lagerbestand sortiert werden:
+        \newline Da sich der Lagerbestand fortlaufend ändert, muss auch die Artikelliste laufend sortiert werden.
+        \item Durch eine Vergrößerung der Firma müssen jetzt mehrere Personen den Wareneingang einpflegen
+        (vorher nur eine Person):
+        \newline Aufwand bei Mehrbenutzerbetrieb, die Isolation und Ablaufintegrität zu gewährleisten, sonst können
+        gegenseitige Behinderungen auftreten.
+        \item Für einen neuen Online-Auftritt mit Bestellmöglichkeit kommt ein separates Programm zum Einsatz,
+        welches aus Sicherheits- und Performanzgründen auf einem separaten Rechner mit einer Kopie der Artikelliste arbeitet:
+        \newline Wenn sich die Artikelliste ändert, werden diese Änderungen nicht auf dem separaten Rechner synchronisiert.
+        \item Für den Online-Auftritt muss die Artikelliste um einige Attribute ergänzt und die Artikelnummerierung erweitert werden:
+        \newline Wenn die Änderungen durch das separate Programm stattfinden, wird nur die Kopie der Artikelliste
+        geändert und nicht die tatsächliche Artikelliste.
+        \item Durch eine Stromunterbrechung fällt der Server aus:
+        \newline Änderungen an der Kopie der Artikelliste können verloren gehen.
+        \item Durch Firmenfusion müssen nun erheblich mehr Artikel gespeichert werden:
+        \newline Es können Probleme bei der Synchronisation der neuen, vergrößerten Datenbestände auftreten.
+    \end{itemize}
+
+    \Aufgabe{3}
+    \newline Unter dem Begriff \emph{Datenunabhängigkeit} versteht man den Grad an Isolation zwischen Daten und Programmen.
+    Ein hoher Grad and Datenunabhängigkeit ist wichtig, um den Wartungsaufwand an Anwendungsprogrammen bei Datenveränderungen
+    möglichst gering zu halten. Es gibt physische und logische Datenunabhängigkeit. Physische Datenunabhängigkeit
+    beschreibt die Unabhängigkeit von Daten in der physischen Speicherung. Die logische Datenunabhängigkeit
+    beschreibt die logische Strukturierung der Daten, welches bspw. durch Sichten erfolgt. Das logische Schema kann geändert
+    werden, ohne die physische Ebene zu verändern und umgekehrt, sodass bspw. bei einer Reorganisation der Speicherformen
+    oder des Speicherorts keine Änderung des logischen Schemas stattfindet.
+
+    \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
