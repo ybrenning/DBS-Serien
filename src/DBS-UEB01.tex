@@ -88,7 +88,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \Aufgabe{1}
-    \begin{itemize}
+        \begin{itemize}
 
         \item DB, DBVS/DBMS, DBS
         \newline Ein \emph{DBS}, auch genannt Datenbanksystem ist ein System, welches zur dauerhaften Speicherung
@@ -104,7 +104,7 @@
         % Module und Veranstaltungen anmelden können.
 
         \item Mehrnutzerbetrieb, Transaktion, log. Einbenutzerbetrieb, Synchronisation
-        \newline Eine \emph{Transaktion} ist eine Folge von DB-operationen, die eine Manipulation der DB erreichen.
+        \newline Eine \emph{Transaktion} ist eine Folge von DB-Operationen, die eine Manipulation der DB erreichen.
         Eine Transaktion erfüllt die sog. ACID-Eigenschaften, welche verscheidene Arten and Datenintegrität implizieren.
         Dazu zählt die Ablaufintegrität, welche einen kontrollierten Mehrbenutzerbetrieb gewährleisten soll.
         Bei einem \emph{Mehrbenutzerbetrieb} werden Transaktionen parallel von mehreren Nutzern ausgeführt.
@@ -135,7 +135,7 @@
         \item Durch eine Vergrößerung der Firma müssen jetzt mehrere Personen den Wareneingang einpflegen
         (vorher nur eine Person):
         \newline Aufwand bei Mehrbenutzerbetrieb, die Isolation und Ablaufintegrität zu gewährleisten, sonst können
-        gegenseitige Behinderungen auftreten.
+        gegenseitige Behinderungen auftreten. Es kommt zu einer laufenden redundanten Synchronisation.
         \item Für einen neuen Online-Auftritt mit Bestellmöglichkeit kommt ein separates Programm zum Einsatz,
         welches aus Sicherheits- und Performanzgründen auf einem separaten Rechner mit einer Kopie der Artikelliste arbeitet:
         \newline Wenn sich die Artikelliste ändert, werden diese Änderungen nicht auf dem separaten Rechner synchronisiert.
@@ -163,25 +163,49 @@
     \begin{itemize}
         \item Abteilungsleiter sollen zusätzlich zu den Daten der Angestellten ihrer Abteilung auch die Daten der
         Angestellter anderer Abteilungen, die an einem Projekt ihrer Abteilung mitarbeiten, lesen können.
-        \newline Es handelt sich hierbei um eine interne Änderung, da die Leserechte innerhalb des DBS
-        geändert werden, wobei die Struktur des DBS konzeptionell gleich bleibt.
+        \newline Es werden externe Zugriffsrechte geändert, d.h. es handelt sich um eine externe Änderung des DBS.
         \item Der Lesezugriff auf Projekttitel ist langsam und wird durch Anlegen eines Zugriffspfades (Index)
         beschleunigt.
         \newline Die Struktur bleibt erhalten, es wird lediglich eine interne Zugriffsoperation geändert.
         Es handelt sich also um eine interne Änderung des DBS.
         \item Durch Reorganisation der Gehaltsabrechnung werden Angestelltendaten statt in alphabetischer Reihenfolge
         sortiert nach Gehaltsgruppen benötigt.
-        \newline Es handelt sich um eine interne Änderung, da die Umsortierung der Angestelltendaten keine
-        strukturelle Änderung des Gesamtschemas erfordert.
+        \newline Es handelt sich hierbei um eine externe Änderung, da die Liste nur in der Sortierung der Ausgabe geändert wird.
         \item Ein Anwendungsprogramm zur Anzeige der Liste aller mit ihren zugehörigen Angestellten soll hinsichtlich
         des Datenschutzes keine Adressdaten der Angestellten darstellen.
         \newline Da die Anwendungsprogramme extern verwendet werden, handelt es sich um eine externe Änderung, da
-        nach dieser Änderung keine Adressdaten durch die Anwendungsprogramme sichtbar sein werden.
+        nach dieser Änderung keine Adressdaten durch die Anwendungsprogramme sichtbar sein werden. % externes Schema
         \item Eine Abteilung wird aufgelöst und alle ehemaligen Angestellten werden anderen Abteilungen zugewiesen.
-        \newline Es handelt sich um eine konzeptionelle Änderung des DBS, da die logische Struktur grundlegend verändert
-        wird.
-    \end{itemize}
+        \newline Es wird kein Schema geändert, da hier nur eine Abteilung aufgelöst und Mitarbeiter neu verteilt bleiben.
+        Das Schema bleibt allerdings gleich.
+        \end{itemize}
 
+    \newpage
+
+    \Aufgabe{5}
+    \newline (a)Die ACID-Eigenschaften (Atomicity, Consistency, Isolation, Durability)
+    Alles oder nichts Eigenschaft, konsistente Zustände, log. Einbenutzerbetrieb mit Locking,
+    Persistenz der Änderung und REDO-Recovery
+    \newline (c) Annahmen / Regeln bzgl DB-Inhalt, welche erfüllt werden müssen
+    Beschreiben sinnvolle und zulässige Änderungen der DB
+    - Zustandsbedingungen vs Übergangsbedingungen
+    Attributbedingungen: Geb.Jahr numerisch, vierstellig
+    Satzbedingung: Geb.Jahr < Einstellungsjahr
+    \newline Beispielsszenario: Zahlungsverkehr (Überweisung)
+    Transaktion umfasst zwei Operationen:
+    OP1 = Verringere Kontostand
+    OP2 = Erhöhe Kontostand
+
+    Integritätsbedingung: Debit-Konto (Kontostand nicht negativ)
+    Transaktion 2 wird bspw. durch Fehler unterbrochen: IB ist verletzt, Stromausfall
+    UNDO T2 (Atomicity), ggfs. REDO T1 (Durability)
+
+    \begin{itemize}
+        \item Falsch - wegen A wird dem AWP entweder der Zustand vor BOT oder nach EOT zugesichert
+        \item Falsch - wegen I sind Daten, die von anderen Transaktionen modifiziert werden, nicht zu lesen
+        \item Richtig - durch Definition von Integritiätsbedingungen, welche durch C gewahrt werden
+        \item Falsch - wegen D dürfen erfolgreich abgeschlossene Transaktionen nicht rückgängig genacht werden
+        \end{itemize}
     \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
