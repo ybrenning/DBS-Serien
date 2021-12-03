@@ -1,0 +1,155 @@
+%! Author = yanni
+%! Date = 03.12.2021
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{wasysym}
+\usepackage{textcomp}
+\graphicspath{{./IMG/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Fach}{Datenbanksysteme I}
+\newcommand{\Name}{Yannick Brenning}
+\newcommand{\Seminargruppe}{C}
+\newcommand{\Matrikelnummer}{3732848}
+\newcommand{\Semester}{WiSe 21/22}
+\newcommand{\Uebungsblatt}{3} %  <-- UPDATE ME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin -1.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.0in}
+
+%%%%%%%%%%%%%%%
+%% Aufgaben-COMMAND
+\newcommand{\Aufgabe}[1]{
+        {
+        \vspace*{0.5cm}
+        \textbf{Aufgabe #1}
+        \vspace*{0.2cm}
+    }
+}
+%%%%%%%%%%%%%%
+\hypersetup{
+    pdftitle = {\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdfauthor = {\Name},
+    pdfborder = {0 0 0}
+}
+
+\lstset{ %
+    language=java,
+    basicstyle=\footnotesize\tt,
+    showtabs=false,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    extendedchars=true,
+    showstringspaces=false,
+    flexiblecolumns=true,
+    xleftmargin=\dimexpr\fboxsep-\fboxrule,
+    xrightmargin=\dimexpr\fboxsep-\fboxrule,
+    gobble=10
+}
+
+\title{Übungsblatt \Uebungsblatt{}}
+\author{\Name{}}
+
+\begin{document}
+    \thispagestyle{fancy}
+    \lhead{\Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+    \rhead{\Semester{} \\  Übungsgruppe \Seminargruppe{}}
+    \vspace*{0.2cm}
+    \begin{center}
+        \LARGE \textbf{Übungsblatt \Uebungsblatt{}}
+    \end{center}
+    \vspace*{0.2cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Insert your solutions here %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \Aufgabe{1: Grundlagen Relationenmodell}
+    \begin{enumerate}[(a)]
+        \item Ein \emph{Relationsschema} legt die Anzahl und den Typ der Attribute für eine Tabelle
+        in einem relationalen Datenbankschema fest. Ein \emph{relationales Datenbankschema} besteht aus mehrerer
+        solcher Tabellen welche miteinander verknüpft sind. Jede Zeile einer solchen Tabelle stellt einen Datensatz dar,
+        welcher aus einer Reihe an Attributen (den Zeilen der Tabelle) besteht. Hierbei ist eine \emph{Relation} eine
+        Menge, welche mit der Tabelle dargestellt wird.
+
+        \item Der \emph{Grad} n einer Relation ist die Anzahl der Spalten, also die Anzahl seiner Attribute.
+        Die \emph{Kardinaität} beschreibt die Anzahl der Sätze, also der Zeilen der Tabelle.
+
+        \item Ein Primärschlüssel wird in einer Spalte der Tabelle gespeichert, um jeden Eintrag mit einem
+        einmaligen Wert zu identifizieren. Ein Fremdschlüssel ist ebenfalls ein Attribut, welches in Bezug auf den
+        Primärschlüssel einer anderen Relation (d.h. eines Attributs einer anderen Tablle) definiert ist.
+    \end{enumerate}
+
+    \Aufgabe{2: ERM \textrightarrow Relationenmodell}
+    \begin{enumerate}[(a)]
+        \item
+        \newpage
+        \item
+        \begin{lstlisting}[language=SQL]
+            CREATE TABLE STATION
+                (BEZEICHNUNG VARCHAR (50),
+                KAPAZITAET INT,
+                KNAME VARCHAR (50),
+                PRIMARY KEY (BEZEICHNUNG),
+                FOREIGN KEY (KNAME) REFERENCES KRANKENHAUS)
+
+            CREATE TABLE KRANKENHAUS
+                (KNAME VARCHAR (50),
+                ORT VARCHAR (50),
+                PRIMARY KEY (KNAME, ORT)
+            FOREIGN KEY (BEZEICHNUNG) REFERENCES STATION)
+
+            CREATE TYPE NAME AS (
+                TITEL VARCHAR (50)
+                VORNAME VARCHAR (50)
+                NACHNAME VARCHAR (50)
+            ) NOT FINAL;
+
+            CREATE TABLE PATIENT
+                (PATNR INT,
+                ALTER INT,
+                PNAME NAME,
+                PRIMARY KEY (PATNR)
+                FOREIGN KEY (KARTENNR) REFERENCES CHIPKARTE)
+
+            CREATE TABLE CHIPKARTE
+                (KARTENNR VARCHAR(16),
+                GUELTIGBIS VARCHAR(12),
+                PRIMARY KEY (KARTENNR),
+                FOREIGN KEY (PATNR) REFERENCES PATIENT)
+
+        \end{lstlisting}
+    \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
