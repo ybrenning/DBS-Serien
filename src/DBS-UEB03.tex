@@ -112,40 +112,64 @@
     \Aufgabe{2: ERM \textrightarrow Relationenmodell}
     \begin{enumerate}[(a)]
         \item
+        Station((Bezeichnung, KName, KOrt):PK, Kapazit"at \\
+        (KName, KOrt): FK REF Krankenhaus(Name, Ort)) \\ \\
+        Krankenhaus((Name, Ort):PK) \\ \\
+        Patient(PatNr:PK, Alter \\
+        KartenNr:FK REF Chipkarte(KartenNr) UNIQUE NOT NULL) \\ \\
+        Chipkarte(KartenNr:PK, g"ultigBis) \\ \\
+        PatientName(PatNr:PK, Titel, Vorname, Nachname \\
+        PatNr: FK REF Patient(PatNr)) \\ \\
+        PLiegtAufS((PatNr, KName, KOrt, SBez):PK, von, bis \\
+        PatNR:FK REF Patient(PatNr), (KName, KOrt):FK REF Krankenhaus(Ort, Name)
+        SBez:FK REF Station(Bezeichnung))
+
         \newpage
         \item
         \begin{lstlisting}[language=SQL]
-            CREATE TABLE STATION
-                (BEZEICHNUNG VARCHAR (50),
-                KAPAZITAET INT,
-                KNAME VARCHAR (50),
-                PRIMARY KEY (BEZEICHNUNG),
-                FOREIGN KEY (KNAME) REFERENCES KRANKENHAUS)
+            CREATE TABLE STATION(
+                BEZEICHNUNG VARCHAR (255) NOT NULL,
+                KNAME VARCHAR (255) NOT NULL,
+                KORT VARCHAR(255) NOT NULL,
+                KAPAZITAET INT NOT NULL,
+                PRIMARY KEY (BEZEICHNUNG, KNAME, KORT),
+                FOREIGN KEY (KNAME, KORT) REFERENCES KRANKENHAUS(NAME, ORT))
 
-            CREATE TABLE KRANKENHAUS
-                (KNAME VARCHAR (50),
-                ORT VARCHAR (50),
-                PRIMARY KEY (KNAME, ORT)
-            FOREIGN KEY (BEZEICHNUNG) REFERENCES STATION)
+            CREATE TABLE KRANKENHAUS(
+                NAME VARCHAR (255) NOT NULL,
+                ORT VARCHAR (255) NOT NULL,
+                PRIMARY KEY (NAME, ORT))
 
-            CREATE TYPE NAME AS (
-                TITEL VARCHAR (50)
-                VORNAME VARCHAR (50)
-                NACHNAME VARCHAR (50)
-            ) NOT FINAL;
+            CREATE TABLE PATIENT(
+                PATNR INT PRIMARY KEY,
+                ALTER INT NOT NULL,
+                KARTENNR INT UNIQUE NOT NULL,
+                NAME NAME,
+                FOREIGN KEY (KARTENNR) REFERENCES CHIPKARTE(KARTENNR))
 
-            CREATE TABLE PATIENT
-                (PATNR INT,
-                ALTER INT,
-                PNAME NAME,
-                PRIMARY KEY (PATNR)
-                FOREIGN KEY (KARTENNR) REFERENCES CHIPKARTE)
+            CREATE TABLE CHIPKARTE(
+                KARTENNR INT PRIMARY KEY,
+                GUELTIGBIS TIMESTAMP NOT NULL)
 
-            CREATE TABLE CHIPKARTE
-                (KARTENNR VARCHAR(16),
-                GUELTIGBIS VARCHAR(12),
-                PRIMARY KEY (KARTENNR),
-                FOREIGN KEY (PATNR) REFERENCES PATIENT)
+            CREATE TABLE PATIENTNAME(
+                PATNR INT PRIMARY KEY,
+                TITEL VARCHAR(100) NOT NULL,
+                VORNAME VARCHAR(50) NOT NULL,
+                NACHNAME VARCHAR(50) NOT NULL,
+                FOREIGN KEY (PATNR) REFERENCES PATIENT(PATNR))
+
+            CREATE TABLE PLIEGTAUFS(
+                PATNR INT NOT NULL,
+                SBEZ VARCHAR(255) NOT NULL,
+                KNAME VARCHAR(255) NOT NULL,
+                KORT VARCHAR(255) NOT NULL,
+                VON DATE NOT NULL,
+                BIS DATE NOT NULL,
+                PRIMARY KEY(PATNR, SBEZ, KNAME, KORT),
+                FOREIGN KEY(PATNR) REFERENCES PATIENT(PATNR),
+                FOREIGN KEY(SBEZ) REFERENCES STATION(BEZEICHNUNG),
+                FOREIGN KEY(KNAME, KORT) REFERENCES KRANKENHAUS(NAME, ORT)
+            )
 
         \end{lstlisting}
     \end{enumerate}
